@@ -11,10 +11,36 @@
   "build": {
     "appId": "com.3sverse.pos",
     "productName": "3S Verse POS System",
-    "files": [ "main.js", "preload.js", "renderer/**/*" ],
-    "win": { "icon": "renderer/assets/icon.ico", "target": [ "nsis", "portable" ], "artifactName": "3SVerse-POS-Setup-${version}.${ext}" },
-    "nsis": { "installerIcon": "renderer/assets/icon.ico", "uninstallerIcon": "renderer/assets/icon.ico", "installerHeaderIcon": "renderer/assets/icon.ico", "oneClick": false, "perMachine": false, "allowToChangeInstallationDirectory": true, "createDesktopShortcut": true, "shortcutName": "3S Verse POS" },
-    "portable": { "artifactName": "3SVerse-POS-Portable-${version}.${ext}" }
+    "files": [
+      "main.js",
+      "preload.js",
+      "renderer/**/*"
+    ],
+    "win": {
+      "icon": "renderer/assets/icon.ico",
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "artifactName": "3SVerse-POS-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "installerIcon": "renderer/assets/icon.ico",
+      "uninstallerIcon": "renderer/assets/icon.ico",
+      "installerHeaderIcon": "renderer/assets/icon.ico",
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "shortcutName": "3S Verse POS"
+    },
+    "portable": {
+      "artifactName": "3SVerse-POS-Portable-${version}.${ext}"
+    }
   },
-  "devDependencies": { "electron": "^31.0.0", "electron-builder": "^24.13.3" }
+  "devDependencies": {
+    "electron": "^31.0.0",
+    "electron-builder": "^24.13.3",
+    "bytenode": "^1.5.7"
+  }
 }

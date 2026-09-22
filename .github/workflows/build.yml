@@ -13,9 +13,11 @@ jobs:
       - run: npm install
 
       - name: Protect application sources (compile to V8 bytecode)
+        shell: bash
+        timeout-minutes: 10
         run: |
           node protect.js prepare
-          npx electron compile.js
+          ELECTRON_RUN_AS_NODE=1 npx electron compile.js
           node protect.js finish
 
       - run: npm run dist -- --publish never

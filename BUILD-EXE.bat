@@ -24,7 +24,9 @@ echo.
 echo  [2/3] Protecting source code (compiling to V8 bytecode)...
 call node protect.js prepare
 if %errorlevel% neq 0 ( echo  [X] Protect step failed. & pause & exit /b )
+set ELECTRON_RUN_AS_NODE=1
 call npx electron compile.js
+set ELECTRON_RUN_AS_NODE=
 if %errorlevel% neq 0 ( echo  [X] Bytecode compile failed. & pause & exit /b )
 call node protect.js finish
 if %errorlevel% neq 0 ( echo  [X] Protect step failed. & pause & exit /b )

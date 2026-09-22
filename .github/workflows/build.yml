@@ -11,6 +11,13 @@ jobs:
         with:
           node-version: 20
       - run: npm install
+
+      - name: Protect application sources (compile to V8 bytecode)
+        run: |
+          node protect.js prepare
+          npx electron compile.js
+          node protect.js finish
+
       - run: npm run dist -- --publish never
         env:
           GH_TOKEN: ""

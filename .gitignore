@@ -1,0 +1,4 @@
+node_modules/
+dist/
+*.jsc
+*.jsc_source.js

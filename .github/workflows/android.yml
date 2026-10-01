@@ -14,7 +14,20 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
-      - uses: android-actions/setup-android@v3
+      - name: Accept Android SDK licenses
+        # android-actions/setup-android@v3 became unreliable on runner images
+        # with cmdline-tools 16.0 ("Failed to find package 'tools'" -> exit 1).
+        # The ubuntu-latest image already ships the Android SDK; Capacitor's
+        # Gradle build auto-installs any missing platform/build-tools once
+        # licenses are accepted.
+        run: |
+          SDKM="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          if [ ! -x "$SDKM" ]; then SDKM="$(command -v sdkmanager || true)"; fi
+          if [ -n "$SDKM" ] && [ -x "$SDKM" ]; then
+            yes | "$SDKM" --licenses >/dev/null 2>&1 || true
+          else
+            echo "sdkmanager not found; relying on preinstalled licenses"
+          fi
       - name: Assemble Capacitor app from phone/ and build APK
         run: |
           set -e

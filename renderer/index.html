@@ -37,7 +37,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent)}
 .topbar h2{font-size:17px;font-weight:700}.topbar .spacer{flex:1}
 .pill{background:var(--panel2);padding:6px 12px;border-radius:20px;font-size:12px;color:var(--muted)}
 .pill.sync{cursor:pointer}.pill.sync.ok{color:var(--accent)}
-.iconbtn{background:var(--panel2);color:var(--txt);width:34px;height:34px;border-radius:50%;font-size:16px;display:flex;align-items:center;justify-content:center}
+.iconbtn{background:transparent;border:none;color:var(--txt);width:34px;height:34px;border-radius:50%;font-size:16px;display:flex;align-items:center;justify-content:center}
 .userchip{display:flex;align-items:center;gap:6px;background:var(--panel2);padding:5px 10px;border-radius:20px;font-size:12px;color:var(--txt)}
 .userchip img{width:22px;height:22px;border-radius:50%;object-fit:cover}
 .view{flex:1;overflow:auto;padding:18px}.hidden{display:none!important}
@@ -160,7 +160,7 @@ tbody tr:hover{background:var(--panel2)}
     <button class="navbtn" data-view="settings" onclick="nav('settings')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Setup</button>
   </div>
   <div class="main">
-    <div class="topbar"><h2 id="viewTitle">New Sale</h2><span class="spacer"></span><span class="pill" id="clock"></span><button class="iconbtn" id="themeBtn" title="Toggle light/dark" onclick="toggleTheme()">🌙</button><span class="pill sync" id="syncPill" onclick="nav('settings')" title="Cloud sync">☁️ Cloud</span><span class="userchip" id="userChip" style="display:none"></span><button class="barbtn" id="logoutBtn" style="display:none;padding:6px 12px" onclick="logout()">Logout</button><span class="pill" id="storePill">Store</span></div>
+    <div class="topbar"><h2 id="viewTitle">New Sale</h2><span class="spacer"></span><span class="pill" id="clock"></span><button class="iconbtn" id="themeBtn" title="Toggle light/dark" onclick="toggleTheme()">☀️</button><span class="pill sync" id="syncPill" onclick="nav('settings')" title="Cloud sync">☁️ Cloud</span><span class="userchip" id="userChip" style="display:none"></span><button class="barbtn" id="logoutBtn" style="display:none;padding:6px 12px" onclick="logout()">Logout</button><span class="pill" id="storePill">Store</span></div>
     <div class="view" id="view-pos">
       <div class="pos">
         <div class="pos-left">
@@ -249,7 +249,7 @@ function toast(msg,err){const t=document.getElementById('toast');t.textContent=m
 function taxById(id){return TAXES.find(t=>t.id===id)||{name:'No Tax',rate:0}}
 function esc(s){return String(s==null?'':s).replace(/[<>&"]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]))}
 function shade(hex,p){try{let h=hex.replace('#','');if(h.length===3)h=h.split('').map(x=>x+x).join('');let r=parseInt(h.slice(0,2),16),g=parseInt(h.slice(2,4),16),b=parseInt(h.slice(4,6),16);const f=(1+p/100);r=Math.max(0,Math.min(255,Math.round(r*f)));g=Math.max(0,Math.min(255,Math.round(g*f)));b=Math.max(0,Math.min(255,Math.round(b*f)));return '#'+[r,g,b].map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){return hex}}
-function applyTheme(){const r=document.documentElement.style;const sc=SCHEMES[S.scheme]||SCHEMES.midnight;['bg','panel','panel2','line','txt','muted','accent','accent2'].forEach(k=>r.setProperty('--'+k,sc[k]));if(S.accent){r.setProperty('--accent',S.accent);r.setProperty('--accent2',shade(S.accent,-18))}const tb=document.getElementById('themeBtn');if(tb)tb.textContent=sc.dark?'🌙':'☀️';document.body.style.background=sc.bg;}
+function applyTheme(){const r=document.documentElement.style;const sc=SCHEMES[S.scheme]||SCHEMES.midnight;['bg','panel','panel2','line','txt','muted','accent','accent2'].forEach(k=>r.setProperty('--'+k,sc[k]));if(S.accent){r.setProperty('--accent',S.accent);r.setProperty('--accent2',shade(S.accent,-18))}const tb=document.getElementById('themeBtn');if(tb)tb.textContent=sc.dark?'☀️':'🌙';document.body.style.background=sc.bg;}
 function toggleTheme(){const sc=SCHEMES[S.scheme]||SCHEMES.midnight;S.scheme=sc.dark?'light':'midnight';save();applyTheme();if(!document.getElementById('view-display').classList.contains('hidden'))renderDisplay();}
 
 function adminObj(){return {id:'__admin',name:(S.adminName||'Owner'),admin:true,perms:{},img:S.logo}}

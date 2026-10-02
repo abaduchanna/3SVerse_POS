@@ -2,6 +2,10 @@ name: Build 3S Verse POS Windows EXE
 on:
   push:
   workflow_dispatch: {}
+
+permissions:
+  contents: write
+
 jobs:
   build-windows:
     runs-on: windows-latest
@@ -23,7 +27,30 @@ jobs:
       - run: npm run dist -- --publish never
         env:
           GH_TOKEN: ""
-      - uses: actions/upload-artifact@v4
+
+      # Release assets do NOT count against the artifact storage quota,
+      # so upload-artifact is intentionally NOT used (same as Studio repo).
+      # Single source of truth: version comes from package.json.
+      - name: Read version from package.json
+        shell: pwsh
+        run: |
+          $v = (Get-Content package.json -Raw | ConvertFrom-Json).version
+          echo "VERSION=$v" >> $env:GITHUB_ENV
+          echo "building POS v$v"
+
+      - name: Attach EXE to release
+        uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: 3SVerse-POS-Windows-EXE
-          path: dist/*.exe
+          tag_name: pos-v${{ env.VERSION }}
+          name: 3S Verse POS v${{ env.VERSION }}
+          body: |
+            Automated build of commit ${{ github.sha }}.
+
+            - `3SVerse-POS-Setup-*.exe` - Windows installer (NSIS)
+            - `3SVerse-POS-Portable-*.exe` - Windows portable, no install needed
+            - `3SVerse-POS-Android-*.apk` - Android app (side-load)
+          files: dist/*.exe
+          allow_updates: true
+          make_latest: true

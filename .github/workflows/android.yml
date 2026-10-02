@@ -2,6 +2,10 @@ name: Build 3S Verse POS Android APK
 on:
   push:
   workflow_dispatch: {}
+
+permissions:
+  contents: write
+
 jobs:
   android:
     runs-on: ubuntu-latest
@@ -50,7 +54,30 @@ jobs:
           cd android
           chmod +x ./gradlew
           ./gradlew assembleDebug --no-daemon
-      - uses: actions/upload-artifact@v4
+      # Release assets do NOT count against the artifact storage quota,
+      # so upload-artifact is intentionally NOT used (same as Studio repo).
+      - name: Read version from package.json
+        run: echo "VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_ENV
+
+      - name: Rename APK for release
+        run: |
+          mkdir -p rel
+          cp capapp/android/app/build/outputs/apk/debug/app-debug.apk "rel/3SVerse-POS-Android-v${VERSION}.apk"
+          ls -la rel/
+
+      - name: Attach APK to release
+        uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: 3SVerse-POS-Android-APK
-          path: capapp/android/app/build/outputs/apk/debug/app-debug.apk
+          tag_name: pos-v${{ env.VERSION }}
+          name: 3S Verse POS v${{ env.VERSION }}
+          body: |
+            Automated build of commit ${{ github.sha }}.
+
+            - `3SVerse-POS-Setup-*.exe` - Windows installer (NSIS)
+            - `3SVerse-POS-Portable-*.exe` - Windows portable, no install needed
+            - `3SVerse-POS-Android-*.apk` - Android app (side-load)
+          files: rel/3SVerse-POS-Android-v${{ env.VERSION }}.apk
+          allow_updates: true
+          make_latest: true

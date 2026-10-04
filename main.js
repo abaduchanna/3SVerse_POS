@@ -1,5 +1,5 @@
 /* 3S Verse POS System - Electron main process */
-const { app, BrowserWindow, dialog, ipcMain, shell, clipboard, nativeImage } = require('electron');
+const { app, BrowserWindow, dialog, ipcMain, shell, clipboard, nativeImage, nativeTheme } = require('electron');
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
@@ -7,6 +7,9 @@ const { spawn } = require('child_process');
 
 const BACKUP_NAME = '3sverse-data.json';
 const APP_FOLDER = '3SVersePOS';
+
+// Keep Electron's real Windows title bar dark as well as the renderer.
+nativeTheme.themeSource = 'dark';
 
 function findDriveRoot() {
   const home = os.homedir();

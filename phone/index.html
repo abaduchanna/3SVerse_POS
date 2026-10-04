@@ -30,7 +30,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent)}
 .logo small{display:block;font-size:8px;color:var(--muted);font-weight:600;letter-spacing:1px;margin-top:2px}
 .navbtn{width:66px;height:50px;border-radius:11px;background:transparent;color:var(--muted);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:9.5px;transition:.15s;position:relative}
 .navbtn svg{width:20px;height:20px}.navbtn:hover{background:var(--panel)}
-.navbtn.active{background:var(--accent);color:#fff;font-weight:700}
+.navbtn.active{background:linear-gradient(90deg,#61e6f2,#b57cf4,#e83dcc);color:#08070c;font-weight:700}
 .navbtn .badge{position:absolute;top:4px;right:8px;background:var(--red);color:#fff;border-radius:10px;font-size:9px;padding:0 5px;font-weight:700}
 .main{flex:1;display:flex;flex-direction:column;overflow:hidden}
 .topbar{height:56px;background:var(--panel);display:flex;align-items:center;padding:0 16px;gap:10px;border-bottom:1px solid var(--line)}
@@ -41,8 +41,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent)}
 .userchip{display:flex;align-items:center;gap:6px;background:var(--panel2);padding:5px 10px;border-radius:20px;font-size:12px;color:var(--txt)}
 .userchip img{width:22px;height:22px;border-radius:50%;object-fit:cover}
 .view{flex:1;overflow:auto;padding:18px}.hidden{display:none!important}
-.footer{height:26px;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--muted);border-top:1px solid var(--line);background:var(--panel)}
-.footer b{color:var(--accent);font-weight:700;margin:0 4px}
+.footer{height:30px;flex:0 0 30px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#c7cbe0;border-top:1px solid #232130;background:#0d0c14;position:relative;z-index:3}
+.footer b{color:#61e6f2;font-weight:700;margin:0 4px}
 .pos{display:grid;grid-template-columns:1fr 420px;gap:16px;height:100%}
 .pos-left{display:flex;flex-direction:column;gap:12px;overflow:hidden}
 .searchrow{display:flex;gap:10px;align-items:center}
@@ -69,7 +69,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent)}
 .totrow.grand{font-size:21px;color:var(--txt);font-weight:800;border-top:1px solid var(--line);padding-top:8px;margin-top:2px}
 .btnrow{display:flex;gap:8px}
 .btn{padding:11px;border-radius:9px;font-weight:600;font-size:14px;flex:1;transition:.12s}
-.btn-primary{background:var(--accent);color:#fff}.btn-primary:hover{filter:brightness(1.07)}
+.btn-primary{background:linear-gradient(90deg,#61e6f2,#b57cf4,#e83dcc);color:#08070c}.btn-primary:hover{filter:brightness(1.07)}
 .btn-ghost{background:var(--panel2);color:var(--txt)}.btn-blue{background:var(--blue);color:#fff}.btn-amber{background:var(--amber);color:#241a02}.btn-red{background:var(--red);color:#fff}
 .btn:disabled{opacity:.4;cursor:not-allowed}
 .empty{text-align:center;color:var(--muted);padding:40px 10px;font-size:13px}
@@ -91,7 +91,7 @@ tbody tr:hover{background:var(--panel2)}
 .field{margin-bottom:12px}.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px;font-weight:600}
 .toolbar{display:flex;gap:10px;margin-bottom:14px;align-items:center;flex-wrap:wrap}.toolbar .spacer{flex:1}
 .barbtn{padding:9px 15px;border-radius:9px;font-weight:600;font-size:13px;background:var(--panel2);color:var(--txt);display:inline-flex;align-items:center;gap:6px}
-.barbtn.green{background:var(--accent);color:#fff}.barbtn.blue{background:var(--blue);color:#fff}.barbtn.red{background:var(--red);color:#fff}
+.barbtn.green{background:linear-gradient(90deg,#61e6f2,#b57cf4,#e83dcc);color:#08070c}.barbtn.blue{background:var(--blue);color:#fff}.barbtn.red{background:var(--red);color:#fff}
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:100;padding:20px}
 .modal{background:var(--panel);border:1px solid var(--line);border-radius:16px;max-width:600px;width:100%;max-height:92vh;overflow:auto;box-shadow:var(--shadow)}
 .modal.wide{max-width:760px}
@@ -124,7 +124,7 @@ tbody tr:hover{background:var(--panel2)}
   .sidebar{width:100%;flex-direction:row;align-items:stretch;overflow-x:auto;overflow-y:hidden;padding:6px;gap:4px;border-right:none;border-bottom:1px solid var(--line)}
   .logo{display:none}
   .navbtn{width:62px;min-width:62px;height:48px;font-size:9px}
-  .footer{display:none}
+  .footer{display:flex;min-height:30px}
   .topbar{flex-wrap:wrap;height:auto;min-height:48px;padding:6px 10px;gap:6px}
   .topbar h2{font-size:15px;flex-basis:100%}
   .pill,.iconbtn,.userchip{font-size:11px}

@@ -62,7 +62,7 @@ jobs:
       - name: Rename APK for release
         run: |
           mkdir -p rel
-          cp capapp/android/app/build/outputs/apk/debug/app-debug.apk "rel/3SVerse-POS-Android-v${VERSION}.apk"
+          cp capapp/android/app/build/outputs/apk/debug/app-debug.apk "rel/3SVerse-POS-Android.apk"
           ls -la rel/
 
       - name: Attach APK to release
@@ -75,9 +75,9 @@ jobs:
           body: |
             Automated build of commit ${{ github.sha }}.
 
-            - `3SVerse-POS-Setup-*.exe` - Windows installer (NSIS)
-            - `3SVerse-POS-Portable-*.exe` - Windows portable, no install needed
-            - `3SVerse-POS-Android-*.apk` - Android app (side-load)
-          files: rel/3SVerse-POS-Android-v${{ env.VERSION }}.apk
+            - `3SVerse-POS-Setup.exe` - Windows installer (NSIS)
+            - `3SVerse-POS-Portable.exe` - Windows portable, no install needed
+            - `3SVerse-POS-Android.apk` - Android app (side-load)
+          files: rel/3SVerse-POS-Android.apk
           allow_updates: true
           make_latest: true

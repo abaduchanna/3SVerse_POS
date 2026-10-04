@@ -22,7 +22,7 @@
         "nsis",
         "portable"
       ],
-      "artifactName": "3SVerse-POS-Setup-${version}.${ext}"
+      "artifactName": "3SVerse-POS-Setup.${ext}"
     },
     "nsis": {
       "installerIcon": "renderer/assets/icon.ico",
@@ -35,7 +35,7 @@
       "shortcutName": "3S Verse POS"
     },
     "portable": {
-      "artifactName": "3SVerse-POS-Portable-${version}.${ext}"
+      "artifactName": "3SVerse-POS-Portable.${ext}"
     }
   },
   "devDependencies": {

@@ -48,9 +48,9 @@ jobs:
           body: |
             Automated build of commit ${{ github.sha }}.
 
-            - `3SVerse-POS-Setup-*.exe` - Windows installer (NSIS)
-            - `3SVerse-POS-Portable-*.exe` - Windows portable, no install needed
-            - `3SVerse-POS-Android-*.apk` - Android app (side-load)
+            - `3SVerse-POS-Setup.exe` - Windows installer (NSIS)
+            - `3SVerse-POS-Portable.exe` - Windows portable, no install needed
+            - `3SVerse-POS-Android.apk` - Android app (side-load)
           files: dist/*.exe
           allow_updates: true
           make_latest: true

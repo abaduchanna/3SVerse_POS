@@ -30,6 +30,16 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 @keyframes bgspin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 @keyframes bgfloatR{0%,100%{transform:translateY(-16px)}50%{transform:translateY(16px)}}
 @keyframes bgfloatO{0%,100%{transform:translateY(-12px)}50%{transform:translateY(12px)}}
+/* Website-exact light theme: on 3sverse.com the dark hero art hides when the
+   theme is light (html:not(.dark) .shape-img-dark{display:none}) and the whole
+   page goes light. The art canvas (#bgart) is a fixed dark #07060b layer, so
+   without these rules only the panels toggled light and the background stayed
+   dark. Light schemes now paint the canvas with --bg and fade the art out;
+   opacity (not display) keeps the spin/float animations running in place so
+   toggling back to a dark scheme resumes seamlessly. */
+html.theme-light #bgart{background:var(--bg)}
+html.theme-light #bgart .bg-ring,html.theme-light #bgart .bg-orb{opacity:0}
+html.theme-light .sidebar{background:var(--panel2)}
 @media (prefers-reduced-motion:reduce){#bgart>div,#bgart img,.login-bg>div,.login-bg img{animation:none}::view-transition-old(root),::view-transition-new(root){animation-duration:.01ms!important}}
 /* Theme-toggle reveal = exact copy of the 3sverse.com website toggle
    (user: "toggle animation bhi website wali lagao"): View Transition
@@ -226,7 +236,7 @@ tbody tr:hover{background:var(--panel2)}
     <div class="view hidden" id="view-reports"></div>
     <div class="view hidden" id="view-display"></div>
     <div class="view hidden" id="view-settings"></div>
-    <div class="footer">DEVELOPED BY <b>WWW.3SVERSE.COM</b> · v1.0.4</div>
+    <div class="footer">DEVELOPED BY <b>WWW.3SVERSE.COM</b> · v1.0.5</div>
   </div>
 </div>
 <div class="login-wrap" id="loginScreen" style="display:none"></div>
@@ -279,7 +289,7 @@ function toast(msg,err){const t=document.getElementById('toast');t.textContent=m
 function taxById(id){return TAXES.find(t=>t.id===id)||{name:'No Tax',rate:0}}
 function esc(s){return String(s==null?'':s).replace(/[<>&"]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]))}
 function shade(hex,p){try{let h=hex.replace('#','');if(h.length===3)h=h.split('').map(x=>x+x).join('');let r=parseInt(h.slice(0,2),16),g=parseInt(h.slice(2,4),16),b=parseInt(h.slice(4,6),16);const f=(1+p/100);r=Math.max(0,Math.min(255,Math.round(r*f)));g=Math.max(0,Math.min(255,Math.round(g*f)));b=Math.max(0,Math.min(255,Math.round(b*f)));return '#'+[r,g,b].map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){return hex}}
-function applyTheme(){const r=document.documentElement.style;const sc=SCHEMES[S.scheme]||SCHEMES.midnight;['bg','panel','panel2','line','txt','muted','accent','accent2'].forEach(k=>r.setProperty('--'+k,sc[k]));if(S.accent){r.setProperty('--accent',S.accent);r.setProperty('--accent2',shade(S.accent,-18))}const tb=document.getElementById('themeBtn');if(tb)tb.textContent=sc.dark?'☀️':'🌙';document.body.style.background=sc.bg;document.documentElement.style.colorScheme=sc.dark?'dark':'light';const mc=document.querySelector('meta[name="theme-color"]');if(mc)mc.setAttribute('content',sc.bg);}
+function applyTheme(){const r=document.documentElement.style;const sc=SCHEMES[S.scheme]||SCHEMES.midnight;['bg','panel','panel2','line','txt','muted','accent','accent2'].forEach(k=>r.setProperty('--'+k,sc[k]));if(S.accent){r.setProperty('--accent',S.accent);r.setProperty('--accent2',shade(S.accent,-18))}const tb=document.getElementById('themeBtn');if(tb)tb.textContent=sc.dark?'☀️':'🌙';document.body.style.background=sc.bg;document.documentElement.style.colorScheme=sc.dark?'dark':'light';document.documentElement.classList.toggle('theme-light',!sc.dark);const mc=document.querySelector('meta[name="theme-color"]');if(mc)mc.setAttribute('content',sc.bg);}
 function toggleTheme(ev){const sc=SCHEMES[S.scheme]||SCHEMES.midnight;const next=sc.dark?'light':'midnight';const apply=()=>{S.scheme=next;save();applyTheme();if(!document.getElementById('view-display').classList.contains('hidden'))renderDisplay();};const reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;const x=ev&&typeof ev.clientX==='number'?ev.clientX:window.innerWidth-60;const y=ev&&typeof ev.clientY==='number'?ev.clientY:44;const rad=Math.hypot(Math.max(x,window.innerWidth-x),Math.max(y,window.innerHeight-y));const st=document.documentElement.style;st.setProperty('--water-x',Math.round(x)+'px');st.setProperty('--water-y',Math.round(y)+'px');if(document.startViewTransition&&!reduce){const vt=document.startViewTransition(apply);if(vt.finished)vt.finished.catch(()=>{});if(vt.ready&&!('CSSPropertyRule'in window)){vt.ready.then(()=>document.documentElement.animate({clipPath:['circle(0px at '+x+'px '+y+'px)','circle('+rad+'px at '+x+'px '+y+'px)']},{duration:2500,easing:'cubic-bezier(0.3, 0, 0.15, 1)',pseudoElement:'::view-transition-new(root)'})).catch(()=>{})}}else{apply()}}
 
 function adminObj(){return {id:'__admin',name:(S.adminName||'Owner'),admin:true,perms:{},img:S.logo}}

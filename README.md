@@ -1,4 +1,4 @@
-# 3S Verse POS System
+# 3SVerse POS System
 
 A customer-ready Point of Sale for Pakistan. Single Windows `.exe`, fully offline-capable, with automatic Google Drive backup that syncs multiple terminals.
 

@@ -1,8 +1,8 @@
 {
   "name": "3sverse-pos",
-  "version": "1.0.5",
-  "description": "3S Verse POS System - Point of Sale for Pakistan (GST + custom slabs, users & permissions, thermal printing, Google Drive sync, WhatsApp invoices)",
-  "author": "3S Verse",
+  "version": "1.0.6",
+  "description": "3SVerse POS System - Point of Sale for Pakistan (GST + custom slabs, users & permissions, thermal printing, Google Drive sync, WhatsApp invoices)",
+  "author": "3SVerse",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -10,7 +10,7 @@
   },
   "build": {
     "appId": "com.3sverse.pos",
-    "productName": "3S Verse POS System",
+    "productName": "3SVerse POS System",
     "files": [
       "main.js",
       "preload.js",
@@ -32,7 +32,7 @@
       "perMachine": false,
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
-      "shortcutName": "3S Verse POS"
+      "shortcutName": "3SVerse POS"
     },
     "portable": {
       "artifactName": "3SVerse-POS-Portable.${ext}"

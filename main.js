@@ -1,4 +1,4 @@
-/* 3S Verse POS System - Electron main process */
+/* 3SVerse POS System - Electron main process */
 const { app, BrowserWindow, dialog, ipcMain, shell, clipboard, nativeImage, nativeTheme } = require('electron');
 const fs = require('fs');
 const os = require('os');

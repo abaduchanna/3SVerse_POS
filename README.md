@@ -1,9 +1,13 @@
 # 3SVerse POS System
 
-A customer-ready Point of Sale for Pakistan. Single Windows `.exe`, fully offline-capable, with automatic Google Drive backup that syncs multiple terminals.
+A customer-ready Point of Sale for Pakistan. Windows `.exe` and Android `.apk`, fully offline-capable, with automatic Google Drive backup that syncs multiple terminals.
 
-## Get the installer
-See **GET-THE-EXE.md** (free cloud build in your browser — no Node.js). Then the shop owner just double-clicks `3SVerse-POS-Setup-1.0.0.exe`.
+## Downloads (latest: pos-v1.0.10)
+- `3SVerse-POS-Setup.exe` — Windows installer (the shop owner double-clicks this)
+- `3SVerse-POS-Portable.exe` — Windows, no install
+- `3SVerse-POS-Android.apk` — Android
+
+How the EXE is built: see **GET-THE-EXE.md** (free cloud build in your browser — no Node.js).
 
 ## Logins
 - **Master / Admin** — full access. PIN set during setup (Setup → or Users → Admin).

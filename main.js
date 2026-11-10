@@ -22,9 +22,25 @@ function findDriveRoot() {
 function ensureAppFolder() { const root = findDriveRoot(); if (!root) return null; const f = path.join(root, APP_FOLDER); try { fs.mkdirSync(f, { recursive: true }); return f; } catch (e) { return null; } }
 function readBackupFrom(folder) { try { const p = path.join(folder, BACKUP_NAME); if (!fs.existsSync(p)) return { exists: false }; const json = fs.readFileSync(p, 'utf8'); let exported = null; try { exported = JSON.parse(json).exported || null; } catch (e) {} return { exists: true, json, exported }; } catch (e) { return { exists: false }; } }
 
+/* Branded boot splash: frameless 640x400 window shown instantly while the main
+   window (and its heavy scripts) load; closed once the main window is painted. */
+function createSplash() {
+  const sp = new BrowserWindow({
+    width: 640, height: 400, frame: false, resizable: false, movable: false,
+    show: false, alwaysOnTop: true, skipTaskbar: true, center: true,
+    backgroundColor: '#07060b', icon: path.join(__dirname, 'renderer', 'assets', 'icon.ico'),
+    webPreferences: { contextIsolation: true, nodeIntegration: false }
+  });
+  sp.once('ready-to-show', () => sp.show());
+  sp.loadFile(path.join(__dirname, 'renderer', 'splash.html'));
+  return sp;
+}
+
 function createWindow() {
+  const splash = createSplash();
+  const shownAt = Date.now();
   const win = new BrowserWindow({
-    width: 1400, height: 900, minWidth: 1040, minHeight: 680,
+    width: 1400, height: 900, minWidth: 1040, minHeight: 680, show: false,
     backgroundColor: '#141118', title: 'POS', autoHideMenuBar: true,
     icon: path.join(__dirname, 'renderer', 'assets', 'icon.ico'),
     webPreferences: { preload: path.join(__dirname, 'preload.js'), contextIsolation: true, nodeIntegration: false }
@@ -33,6 +49,19 @@ function createWindow() {
     if (url && url.startsWith('http')) { shell.openExternal(url); return { action: 'deny' }; }
     return { action: 'allow' };
   });
+  let revealed = false;
+  const reveal = () => {
+    if (revealed) return; revealed = true;
+    // keep the splash on screen at least 1.1s so it never just flashes
+    setTimeout(() => {
+      try { if (!win.isDestroyed()) { win.show(); win.focus(); } } catch (e) {}
+      try { if (!splash.isDestroyed()) splash.close(); } catch (e) {}
+    }, Math.max(0, 1100 - (Date.now() - shownAt)));
+  };
+  win.once('ready-to-show', reveal);
+  win.webContents.once('did-finish-load', reveal);
+  setTimeout(reveal, 15000); // safety net: never leave the user on the splash
+  win.on('closed', () => { try { if (!splash.isDestroyed()) splash.close(); } catch (e) {} });
   win.loadFile(path.join(__dirname, 'renderer', 'index.html'));
 }
 

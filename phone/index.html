@@ -216,6 +216,12 @@ input:focus,select:focus,textarea:focus{border-color:#6ee7ef}
   .modal{max-width:100%;border-radius:20px 20px 0 0;max-height:92vh}
   #toast{bottom:84px}
 }
+/* wide windows (tablet / desktop browser): same proportional ring/orb as the xfer dashboard
+   (no px caps, so they do not shrink / get cropped when the window is large) */
+@media (min-width:820px){
+  .bg-ring,.login-bg .bg-ring{right:-24vw;top:-14vh;width:min(52vw,125vh)}
+  .bg-orb,.login-bg .bg-orb{left:-10vw;bottom:-22vh;width:min(30vw,75vh)}
+}
 @media print{@page{size:80mm auto;margin:0}html,body{width:80mm;background:#fff!important}body *{visibility:hidden}#printArea,#printArea *{visibility:visible}#printArea{position:absolute;left:0;top:0;width:80mm}.no-print{display:none!important}}
 </style>
 </head>
